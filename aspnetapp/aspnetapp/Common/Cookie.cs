@@ -7,6 +7,8 @@ namespace PsExcercise;
 
 public static class Cookie {
 
+    public const string COOKIE_NAME = "psexcercise";
+
     public static IConfigurationSection ConfigSection { get; set; }
 
     public static string Issuer { get => Cookie.ConfigSection["Issuer"]; }
@@ -42,6 +44,31 @@ public static class Cookie {
         };
 
         // 4. Add the JWT to the response as a cookie
-        Response.Cookies.Append("psexcercise", jwtToken, cookieOptions);
+        Response.Cookies.Append(COOKIE_NAME, jwtToken, cookieOptions);
+    }
+
+    public static User GetLoggedUser(this HttpRequest Request) {
+        try {
+            var jwtToken = Request.Cookies[COOKIE_NAME];
+
+            if (string.IsNullOrEmpty(jwtToken)) {
+                throw new Exception("JWT cookie is missing.");
+            }
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var jwtSecurityToken = tokenHandler.ReadJwtToken(jwtToken);
+            var userIdClaim = jwtSecurityToken.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Sub);
+
+            if (userIdClaim == null) {
+                throw new Exception("User ID claim not found in JWT.");
+            }
+
+            var userId = int.Parse(userIdClaim.Value);
+            return DatabaseUser.Select(userId);
+        }
+
+        catch (Exception) {
+            return null;
+        }
     }
 }

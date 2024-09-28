@@ -1,7 +1,3 @@
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System.Text.Encodings.Web;
-
 namespace PsExcercise;
 
 public class Middleware {
@@ -12,7 +8,7 @@ public class Middleware {
         _next = next;
     }
 
-    public async Task InvokeAsync(HttpContext context) {
+    public async System.Threading.Tasks.Task InvokeAsync(HttpContext context) {
         try {
             await _next(context);
             Log(context);
@@ -29,7 +25,7 @@ public class Middleware {
         }
     }
 
-    private static Task HandleExceptionAsync(HttpContext context, int statusCode, Exception exception) {
+    private static System.Threading.Tasks.Task HandleExceptionAsync(HttpContext context, int statusCode, Exception exception) {
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = statusCode;
         var response = new { error = exception.Message };

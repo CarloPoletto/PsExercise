@@ -2,8 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace PsExcercise;
 
-public class UserController : Controller {
+public class UserController : AController {
 
+    [AuthorizeAll]
     public IActionResult Login([FromBody] LoginNto loginNto) {
         var user = DatabaseUser.Select(loginNto.email, loginNto.password);
 
@@ -11,6 +12,6 @@ public class UserController : Controller {
             throw new UnauthorizedAccessException();
         
         Response.AddAuthJWT(user);
-        return Ok(new UserNto(user));
+        return Ok();
     }
 }
