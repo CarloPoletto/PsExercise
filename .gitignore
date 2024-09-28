@@ -1,5 +1,7 @@
 postgresql/data/**
 
+.editorconfig
+
 # Created by https://www.toptal.com/developers/gitignore/api/aspnetcore,react
 # Edit at https://www.toptal.com/developers/gitignore?templates=aspnetcore,react
 
