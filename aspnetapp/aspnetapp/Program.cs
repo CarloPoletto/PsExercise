@@ -1,22 +1,18 @@
 using System.Text.Json.Serialization;
 using PsExcercise;
 
+// WebApplicationBuilder
+//-----------------------
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddHealthChecks();
-
-// builder.Services.ConfigureHttpJsonOptions(options =>
-// {
-//     options.SerializerOptions.TypeInfoResolverChain.Insert(0, AppJsonSerializerContext.Default);
-// });
 
 Cookie.ConfigSection = builder.Configuration.GetSection("JwtConfiguration");
 Database.ConnectionString = builder.Configuration.GetSection("Database")["Connection"];
 
+// WebApplication
+//-----------------------
 var app = builder.Build();
-
 app.MapHealthChecks("/healthz");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
