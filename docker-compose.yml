@@ -1,0 +1,13 @@
+services:
+    aspnet:
+        container_name: aspnet
+        build:
+            context: ./aspnetapp
+        ports:
+            - 5121:8080
+        networks:
+            - network
+
+networks:
+    network:
+        driver: bridge
