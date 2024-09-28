@@ -5,15 +5,35 @@ import * as Utils from "../common/Utils";
 import { isPlainObject } from "is-plain-object";
 
 export interface IStore {
+    readonly loader: boolean;
+    readonly active: IPages;
+    readonly pages: {
+        readonly home: {};
+        readonly signIn: {};
+        readonly signUp: {};
+    };
 }
+
+export type IPages = keyof IStore["pages"];
 
 export class Store implements IStore {
     
     private static singleton: Store = new Store();
     private components = { app: null as App };
 
+    public get loader(): boolean { return this.components.app.state.loader; }
+    public get active(): IPages { return this.components.app.state.active; }
+    public get pages(): IStore["pages"] { return this.components.app.state.pages; }
+
     public static init(): IStore {
         return {
+            loader: false,
+            active: "home",
+            pages: {
+                home: {},
+                signIn: {},
+                signUp: {},
+            }
         };
     }
 
