@@ -39,7 +39,7 @@ public class UserController : AController {
         var user = LoggedUser;
 
         if(user == null)
-            return Ok(null);
+            return Ok();
         
         return Ok(new UserNto(user));
     }
