@@ -3,14 +3,17 @@ import merge from "deepmerge";
 import * as Types from "../common/Types";
 import * as Utils from "../common/Utils";
 import { isPlainObject } from "is-plain-object";
+import { SignUpDto } from "models/SignUp";
+import { SignInDto } from "models/SignIn";
+import { User } from "models/User";
 
 export interface IStore {
     readonly loader: boolean;
+    readonly user: User;
     readonly active: IPages;
     readonly pages: {
-        readonly home: {};
-        readonly signIn: {};
-        readonly signUp: {};
+        readonly signIn: SignInDto;
+        readonly signUp: SignUpDto;
     };
 }
 
@@ -22,17 +25,24 @@ export class Store implements IStore {
     private components = { app: null as App };
 
     public get loader(): boolean { return this.components.app.state.loader; }
+    public get user(): User { return this.components.app.state.user; }
     public get active(): IPages { return this.components.app.state.active; }
     public get pages(): IStore["pages"] { return this.components.app.state.pages; }
 
     public static init(): IStore {
         return {
             loader: false,
-            active: "home",
+            user: null,
+            active: "signIn",
             pages: {
-                home: {},
-                signIn: {},
-                signUp: {},
+                signIn: {
+                    email: null,
+                    password: null,
+                },
+                signUp: {
+                    email: null,
+                    password: null,
+                },
             }
         };
     }
@@ -45,6 +55,24 @@ export class Store implements IStore {
 
     public static get state(): Store {
         return Store.singleton;
+    }
+
+    /* Loader
+    -----------------------------------*/
+    public static async onLoadindig(doAction: () => Promise<void>): Promise<void> {
+        try {
+            await Store.set({ loader: true });
+            await Utils.sleep(500);
+            await doAction();
+        }
+
+        finally {
+            await Store.set({ loader: false });
+        }
+    }
+
+    public static onClick(doAction: () => Promise<void>): (() => void) {
+        return async () => await Store.onLoadindig(doAction);
     }
 
     /* Setter
@@ -66,5 +94,17 @@ export class Store implements IStore {
         }
 
         await Store.state.components.app.setState(getState());
+    }
+
+    public static async setPages(data: Types.RecursivePartial<IStore["pages"]>): Promise<void> {
+        await Store.set({ pages: data });
+    }
+
+    public static async setPagesSignIn(data: Types.RecursivePartial<IStore["pages"]["signIn"]>): Promise<void> {
+        await Store.setPages({ signIn: data });
+    }
+
+    public static async setPagesSignUp(data: Types.RecursivePartial<IStore["pages"]["signUp"]>): Promise<void> {
+        await Store.setPages({ signUp: data });
     }
 }

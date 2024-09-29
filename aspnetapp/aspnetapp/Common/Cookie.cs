@@ -15,7 +15,7 @@ public static class Cookie {
     public static string Audience { get => Cookie.ConfigSection["Audience"]; }
     public static string SecretKey { get => Cookie.ConfigSection["SecretKey"]; }
 
-    public static void AddAuthJWT(this HttpResponse Response, User user) {
+    public static void InsertJWT(this HttpResponse Response, User user) {
         
         // 1. Create security key
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Cookie.SecretKey));
@@ -45,6 +45,10 @@ public static class Cookie {
 
         // 4. Add the JWT to the response as a cookie
         Response.Cookies.Append(COOKIE_NAME, jwtToken, cookieOptions);
+    }
+    
+    public static void DeleteJWT(this HttpResponse Response) {
+        Response.Cookies.Delete(COOKIE_NAME);
     }
 
     public static User GetLoggedUser(this HttpRequest Request) {

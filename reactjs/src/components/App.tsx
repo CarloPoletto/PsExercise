@@ -1,6 +1,9 @@
 import React from "react";
 import { IPages, IStore, Store } from "classes/Store";
-import { Button, Divider, Form, FormInput, Grid, GridColumn, List, Segment } from "semantic-ui-react";
+import { Button, Dimmer, Form, Header, List, Loader, Segment } from "semantic-ui-react";
+import { ControllerUser } from "controller/ControllerUser";
+import PageUser from "./PageUser";
+import PageTask from "./PageTask";
 
 export default class App extends React.Component<{}, IStore> {
 
@@ -14,97 +17,33 @@ export default class App extends React.Component<{}, IStore> {
         Store.setComponentApp(this);
     }
 
-    private getPage(page: IPages, content: React.ReactNode): React.ReactNode {
-        if(Store.state.active != page)
-            return null;
+	public override async componentDidMount(): Promise<void> {
+        await Store.onLoadindig(
+            async () => {
+                let user = await ControllerUser.getLoggedUser();
     
-        return <Segment secondary padded="very" className="centerXY" style={{ maxWidth: 500 }}>
-            <List horizontal style={{ width: "100%" }}>
-                {content}
-            </List>
-        </Segment>;
-    }
-
-    private getPageHome(): React.ReactNode {
-        return this.getPage("home", <Form>
-            <Button
-                fluid
-                primary
-                icon="check"
-                labelPosition="left"
-                content="Sign In"
-                onClick={async () => Store.set({ active: "signIn" })}
-            />
-            <Button
-                fluid
-                primary
-                icon="check"
-                labelPosition="left"
-                content="Sign Up"
-                onClick={async () => Store.set({ active: "signUp" })}
-            />
-        </Form>);
-    }
-
-    private getPageSignIn(): React.ReactNode {
-        return this.getPage("signIn", <Form>
-            <Form.Input
-                fluid
-                icon="user"
-                iconPosition="left"
-                placeholder="Email"
-            />
-            
-            <Form.Input
-                fluid
-                icon="lock"
-                iconPosition="left"
-                placeholder="Password"
-                type="password"
-            />
-
-            <Button
-                fluid
-                primary
-                icon="check"
-                labelPosition="left"
-                content="Confirm"
-                onClick={async () => console.log("ciao")} />
-        </Form>);
-    }
-
-    private getPageSignUp(): React.ReactNode {
-        return this.getPage("signUp", <Form>
-            <Form.Input
-                fluid
-                icon="user"
-                iconPosition="left"
-                placeholder="Email"
-            />
-            
-            <Form.Input
-                fluid
-                icon="lock"
-                iconPosition="left"
-                placeholder="Password"
-                type="password"
-            />
-
-            <Button
-                fluid
-                primary
-                icon="check"
-                labelPosition="left"
-                content="Confirm"
-                onClick={async () => console.log("ciao")} />
-        </Form>);
-    }
+                await Store.set({
+                    user: user,
+                });
+            } 
+        );
+	}
 
     public render(): React.ReactNode {
         return <>
-            {this.getPageHome()}
-            {this.getPageSignIn()}
-            {this.getPageSignUp()}
+			{Store.state.loader == true && <Dimmer
+				active
+				inverted
+				style={{
+                    zIndex: 1000,
+                    backgroundColor: "white",
+                }}
+            >
+				<Loader inverted size="large" />
+			</Dimmer>}
+
+            <PageUser />
+            <PageTask />
         </>;
     }
 }
