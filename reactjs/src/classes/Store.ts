@@ -6,18 +6,20 @@ import { isPlainObject } from "is-plain-object";
 import { SignUpDto } from "models/SignUp";
 import { SignInDto } from "models/SignIn";
 import { User } from "models/User";
+import { Task } from "models/Task";
+import { ControllerUser } from "controller/ControllerUser";
+import { ControllerTask } from "controller/ControllerTask";
 
 export interface IStore {
     readonly loader: boolean;
-    readonly user: User;
-    readonly active: IPages;
-    readonly pages: {
-        readonly signIn: SignInDto;
-        readonly signUp: SignUpDto;
-    };
-}
 
-export type IPages = keyof IStore["pages"];
+    readonly user: User;
+    readonly tasks: Task[];
+
+    readonly signIn: SignInDto;
+    readonly signUp: SignUpDto;
+    readonly activeSign: "signIn" | "signUp";
+}
 
 export class Store implements IStore {
     
@@ -25,25 +27,24 @@ export class Store implements IStore {
     private components = { app: null as App };
 
     public get loader(): boolean { return this.components.app.state.loader; }
+
     public get user(): User { return this.components.app.state.user; }
-    public get active(): IPages { return this.components.app.state.active; }
-    public get pages(): IStore["pages"] { return this.components.app.state.pages; }
+    public get tasks(): Task[] { return this.components.app.state.tasks; }
+
+    public get signIn(): IStore["signIn"] { return this.components.app.state.signIn; }
+    public get signUp(): IStore["signUp"] { return this.components.app.state.signUp; }
+    public get activeSign(): IStore["activeSign"] { return this.components.app.state.activeSign; }
 
     public static init(): IStore {
         return {
             loader: false,
+
             user: null,
-            active: "signIn",
-            pages: {
-                signIn: {
-                    email: null,
-                    password: null,
-                },
-                signUp: {
-                    email: null,
-                    password: null,
-                },
-            }
+            tasks: null,
+
+            signIn: null,
+            signUp: null,
+            activeSign: "signIn",
         };
     }
 
@@ -75,6 +76,15 @@ export class Store implements IStore {
         return async () => await Store.onLoadindig(doAction);
     }
 
+    public static async refresh(): Promise<void> {
+        await Store.set({
+            user: await ControllerUser.getLoggedUser(),
+            tasks: await ControllerTask.getAll(),
+            signIn: null,
+            signUp: null,
+        });
+    }
+
     /* Setter
     -----------------------------------*/
     public static async set(...data: Types.RecursivePartial<IStore>[]): Promise<void> {
@@ -96,15 +106,11 @@ export class Store implements IStore {
         await Store.state.components.app.setState(getState());
     }
 
-    public static async setPages(data: Types.RecursivePartial<IStore["pages"]>): Promise<void> {
-        await Store.set({ pages: data });
+    public static async setSignIn(data: Types.RecursivePartial<IStore["signIn"]>): Promise<void> {
+        await Store.set({ signIn: data });
     }
 
-    public static async setPagesSignIn(data: Types.RecursivePartial<IStore["pages"]["signIn"]>): Promise<void> {
-        await Store.setPages({ signIn: data });
-    }
-
-    public static async setPagesSignUp(data: Types.RecursivePartial<IStore["pages"]["signUp"]>): Promise<void> {
-        await Store.setPages({ signUp: data });
+    public static async setSignUp(data: Types.RecursivePartial<IStore["signUp"]>): Promise<void> {
+        await Store.set({ signUp: data });
     }
 }

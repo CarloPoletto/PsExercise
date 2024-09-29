@@ -1,3 +1,5 @@
+import * as Utils from "common/Utils";
+
 export class TaskDto {
 	public readonly id: number;
 	public readonly creationTime: string;
@@ -18,4 +20,17 @@ export class Task {
 	public readonly description: string;
 	public readonly completed: boolean;
 	public readonly priority: number;
+
+	constructor(task: TaskDto = null) {
+		if(task != null) {
+			this.id = task.id;
+			this.creationTime = Utils.stringToDate(task.creationTime);
+			this.expirationDate = Utils.stringToDate(task.expirationDate);
+			this.userId = task.userId;
+			this.title = task.title;
+			this.description = task.description;
+			this.completed = task.completed;
+			this.priority = task.priority;
+		}
+    }
 }

@@ -10,4 +10,15 @@ public class TaskController : AController {
         var tasks = DatabaseTask.Select(user.Id);
         return Ok(tasks.Select(el => new TaskDto(el)));
     }
+
+    [AuthorizeUser]
+    [Route("[controller]/[action]/{taskId}")]
+    public IActionResult Delete(int taskId) {
+        var user = this.LoggedUser;
+        DatabaseTask.Delete(
+            userId: user.Id,
+            taskId: taskId
+        );
+        return Ok();
+    }
 }

@@ -40,7 +40,7 @@ public static class Cookie {
             HttpOnly = true,
             Secure = true,
             SameSite = SameSiteMode.Strict,
-            Expires = DateTime.Now.AddMinutes(30)
+            Expires = DateTime.Now.AddMonths(6)
         };
 
         // 4. Add the JWT to the response as a cookie

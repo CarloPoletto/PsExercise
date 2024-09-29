@@ -1,12 +1,13 @@
 import React from "react";
-import { IPages, Store } from "classes/Store";
+import { Store, IStore } from "classes/Store";
 import { Form, Header, List, Segment } from "semantic-ui-react";
 import { ControllerUser } from "controller/ControllerUser";
+import { ControllerTask } from "controller/ControllerTask";
 
 export default class PageUser extends React.Component {
     
-    private getPage(page: IPages, title: string, content: React.ReactNode): React.ReactNode {
-        if(Store.state.active != page)
+    private getPage(active: IStore["activeSign"], title: string, content: React.ReactNode): React.ReactNode {
+        if(Store.state.activeSign != active)
             return null;
     
         return <Segment secondary padded="very" className="centerXY" style={{ maxWidth: 500 }}>
@@ -24,8 +25,8 @@ export default class PageUser extends React.Component {
                 icon="user"
                 iconPosition="left"
                 placeholder="Email"
-                value={Store.state.pages.signIn.email ?? ""}
-                onChange={event => Store.setPagesSignIn({ email: event.target.value })}
+                value={Store.state.signIn?.email ?? ""}
+                onChange={event => Store.setSignIn({ email: event.target.value })}
             />
             
             <Form.Input
@@ -34,8 +35,8 @@ export default class PageUser extends React.Component {
                 iconPosition="left"
                 placeholder="Password"
                 type="password"
-                value={Store.state.pages.signIn.password ?? ""}
-                onChange={event => Store.setPagesSignIn({ password: event.target.value })}
+                value={Store.state.signIn?.password ?? ""}
+                onChange={event => Store.setSignIn({ password: event.target.value })}
             />
 
             <Form.Button
@@ -46,18 +47,12 @@ export default class PageUser extends React.Component {
                 content="Confirm"
                 onClick={Store.onClick(
                     async () => {
-                        console.log(Store.state.pages.signIn.email);
-                        console.log(Store.state.pages.signIn.password);
-    
                         await ControllerUser.signIn({
-                            email: Store.state.pages.signIn.email,
-                            password: Store.state.pages.signIn.password,
+                            email: Store.state.signIn.email,
+                            password: Store.state.signIn.password,
                         });
     
-                        await Store.set({
-                            user: await ControllerUser.getLoggedUser(),
-                            pages: Store.init().pages,
-                        });
+                        await Store.refresh();
                     }
                 )}
             />
@@ -71,7 +66,7 @@ export default class PageUser extends React.Component {
                     async () => {
                         await Store.set({
                             ...Store.init(),
-                            active: "signUp",
+                            activeSign: "signUp",
                         });
                     }
                 )}
@@ -86,8 +81,8 @@ export default class PageUser extends React.Component {
                 icon="user"
                 iconPosition="left"
                 placeholder="Email"
-                value={Store.state.pages.signUp.email ?? ""}
-                onChange={event => Store.setPagesSignUp({ email: event.target.value })}
+                value={Store.state.signUp?.email ?? ""}
+                onChange={event => Store.setSignUp({ email: event.target.value })}
             />
             
             <Form.Input
@@ -96,8 +91,8 @@ export default class PageUser extends React.Component {
                 iconPosition="left"
                 placeholder="Password"
                 type="password"
-                value={Store.state.pages.signUp.password ?? ""}
-                onChange={event => Store.setPagesSignUp({ password: event.target.value })}
+                value={Store.state.signUp?.password ?? ""}
+                onChange={event => Store.setSignUp({ password: event.target.value })}
             />
 
             <Form.Button
@@ -108,18 +103,12 @@ export default class PageUser extends React.Component {
                 content="Confirm"
                 onClick={Store.onClick(
                     async () => {
-                        console.log(Store.state.pages.signUp.email);
-                        console.log(Store.state.pages.signUp.password);
-    
                         await ControllerUser.signUp({
-                            email: Store.state.pages.signUp.email,
-                            password: Store.state.pages.signUp.password,
+                            email: Store.state.signUp?.email,
+                            password: Store.state.signUp?.password,
                         });
     
-                        await Store.set({
-                            user: await ControllerUser.getLoggedUser(),
-                            pages: Store.init().pages,
-                        });
+                        await Store.refresh();
                     }
                 )}
             />
@@ -133,7 +122,7 @@ export default class PageUser extends React.Component {
                     async () => {
                         await Store.set({
                             ...Store.init(),
-                            active: "signIn",
+                            activeSign: "signIn",
                         });
                     }
                 )}
