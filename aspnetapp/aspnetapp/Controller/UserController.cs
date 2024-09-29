@@ -6,6 +6,11 @@ public class UserController : AController {
 
     [AuthorizeAll]
     public IActionResult SignUp([FromBody] SignUpDto signUpDto) {
+        var userPrev = DatabaseUser.Select(signUpDto.email, signUpDto.password);
+
+        if(userPrev != null)
+            return Conflict();
+
         var userId = DatabaseUser.Insert(signUpDto.email, signUpDto.password);
         var user = DatabaseUser.Select(userId);
         Response.InsertJWT(user);
