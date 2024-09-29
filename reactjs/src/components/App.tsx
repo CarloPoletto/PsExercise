@@ -1,9 +1,9 @@
 import React from "react";
-import { IPages, IStore, Store } from "classes/Store";
-import { Button, Dimmer, Form, Header, List, Loader, Segment } from "semantic-ui-react";
-import { ControllerUser } from "controller/ControllerUser";
+import { IStore, Store } from "common/Store";
+import { Dimmer, Loader } from "semantic-ui-react";
 import PageUser from "./PageUser";
 import PageTask from "./PageTask";
+import { SemanticToastContainer } from "react-semantic-toasts";
 
 export default class App extends React.Component<{}, IStore> {
 
@@ -20,17 +20,15 @@ export default class App extends React.Component<{}, IStore> {
 	public override async componentDidMount(): Promise<void> {
         await Store.onLoadindig(
             async () => {
-                let user = await ControllerUser.getLoggedUser();
-    
-                await Store.set({
-                    user: user,
-                });
-            } 
+                await Store.refresh();
+            }
         );
 	}
 
     public render(): React.ReactNode {
         return <>
+			<SemanticToastContainer className="toast" />
+
 			{Store.state.loader == true && <Dimmer
 				active
 				inverted

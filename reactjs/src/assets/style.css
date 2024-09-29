@@ -33,3 +33,18 @@
     transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
 }
+
+/* Semantic UI Toast
+===================================*/
+#psexcercise .ui-alerts.toast {
+    width: 100%;
+    z-index: 1000;
+    top: 10px;
+    position: fixed;
+}
+
+#psexcercise .ui-alerts.toast .message {
+    width: 80%;
+    max-width: 800px;
+    margin: auto;
+}

@@ -18,7 +18,7 @@ public class TaskDto {
     public TaskDto(Task task) {
         this.id = task.Id;
         this.creationTime = task.CreationTime.ToNetDate();
-        this.expirationDate = task.CreationTime.ToNetDate();
+        this.expirationDate = task.ExpirationDate.ToNetDate();
         this.userId = task.UserId;
         this.title = task.Title;
         this.description = task.Description;

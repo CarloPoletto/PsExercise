@@ -57,9 +57,17 @@ INSERT INTO tasks
     ("user_id", "expiration_date", "completed", "priority", "title", "description") 
 VALUES 
     (1, '2025-01-01', false, 0, 'Task 1', 'Description Task 1'),
-    (1, '2025-01-01', false, 1, 'Task 2', 'Description Task 2'),
+    (1, '2026-01-01', false, 1, 'Task 2', 'Description Task 2'),
+    (1, '2027-01-01', false, 0, 'Task 3', 'Description Task 3'),
+    (1, '2028-01-01', false, 1, 'Task 4', 'Description Task 4'),
+    
     (2, '2025-01-01', false, 0, 'Task 1', 'Description Task 1'),
-    (2, '2025-01-01', false, 1, 'Task 2', 'Description Task 2'),
+    (2, '2026-01-01', false, 1, 'Task 2', 'Description Task 2'),
+    (2, '2027-01-01', false, 0, 'Task 3', 'Description Task 3'),
+    (2, '2028-01-01', false, 1, 'Task 4', 'Description Task 4'),
+    
     (3, '2025-01-01', false, 0, 'Task 1', 'Description Task 1'),
-    (3, '2025-01-01', false, 1, 'Task 2', 'Description Task 2')
+    (3, '2026-01-01', false, 1, 'Task 2', 'Description Task 2'),
+    (3, '2027-01-01', false, 0, 'Task 3', 'Description Task 3'),
+    (3, '2028-01-01', false, 1, 'Task 4', 'Description Task 4')
 ;
