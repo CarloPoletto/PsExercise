@@ -17,4 +17,33 @@ public static class DatabaseTask {
         command.Parameters.AddWithValue("user_id", NpgsqlDbType.Integer, userId);
         Database.ExecuteNonQuery(command);
     }
+
+    public static void Insert(int userId, Task task)  {
+        NpgsqlCommand command = new NpgsqlCommand(
+            $"INSERT INTO \"tasks\" (" +
+                $"\"expiration_date\", " +
+                $"\"user_id\", " +
+                $"\"title\", " +
+                $"\"description\", " +
+                $"\"completed\", " +
+                $"\"priority\" " +
+            $") VALUES (" +
+                $"@expiration_date, " +
+                $"@user_id, " +
+                $"@title, " +
+                $"@description, " +
+                $"@completed, " +
+                $"@priority " +
+            $") " +
+            $"RETURNING id"
+        );
+
+        command.Parameters.AddWithValue("expiration_date", NpgsqlDbType.Date, task.ExpirationDate);
+        command.Parameters.AddWithValue("user_id", NpgsqlDbType.Integer, userId);
+        command.Parameters.AddWithValue("title", NpgsqlDbType.Varchar, task.Title);
+        command.Parameters.AddWithValue("description", NpgsqlDbType.Varchar, task.Description);
+        command.Parameters.AddWithValue("completed", NpgsqlDbType.Boolean, task.Completed);
+        command.Parameters.AddWithValue("priority", NpgsqlDbType.Integer, task.Priority);
+        Database.ExecuteNonQuery(command);
+    }
 }

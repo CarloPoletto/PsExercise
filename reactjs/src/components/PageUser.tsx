@@ -2,12 +2,11 @@ import React from "react";
 import { Store, IStore } from "classes/Store";
 import { Form, Header, List, Segment } from "semantic-ui-react";
 import { ControllerUser } from "controller/ControllerUser";
-import { ControllerTask } from "controller/ControllerTask";
 
 export default class PageUser extends React.Component {
     
-    private getPage(active: IStore["activeSign"], title: string, content: React.ReactNode): React.ReactNode {
-        if(Store.state.activeSign != active)
+    private getPage(active: IStore["unlogged"]["active"], title: string, content: React.ReactNode): React.ReactNode {
+        if(Store.state.unlogged.active != active)
             return null;
     
         return <Segment secondary padded="very" className="centerXY" style={{ maxWidth: 500 }}>
@@ -25,8 +24,8 @@ export default class PageUser extends React.Component {
                 icon="user"
                 iconPosition="left"
                 placeholder="Email"
-                value={Store.state.signIn?.email ?? ""}
-                onChange={event => Store.setSignIn({ email: event.target.value })}
+                value={Store.state.unlogged.signIn?.email ?? ""}
+                onChange={event => Store.setUnloggedSignIn({ email: event.target.value })}
             />
             
             <Form.Input
@@ -36,7 +35,7 @@ export default class PageUser extends React.Component {
                 placeholder="Password"
                 type="password"
                 value={Store.state.signIn?.password ?? ""}
-                onChange={event => Store.setSignIn({ password: event.target.value })}
+                onChange={event => Store.setUnloggedSignIn({ password: event.target.value })}
             />
 
             <Form.Button
@@ -64,10 +63,8 @@ export default class PageUser extends React.Component {
                 content="Sign Up"
                 onClick={Store.onClick(
                     async () => {
-                        await Store.set({
-                            ...Store.init(),
-                            activeSign: "signUp",
-                        });
+                        await Store.set(Store.init());
+                        await Store.setUnlogged({ active: "signUp" });
                     }
                 )}
             />
@@ -82,7 +79,7 @@ export default class PageUser extends React.Component {
                 iconPosition="left"
                 placeholder="Email"
                 value={Store.state.signUp?.email ?? ""}
-                onChange={event => Store.setSignUp({ email: event.target.value })}
+                onChange={event => Store.setUnloggedSignUp({ email: event.target.value })}
             />
             
             <Form.Input
@@ -92,7 +89,7 @@ export default class PageUser extends React.Component {
                 placeholder="Password"
                 type="password"
                 value={Store.state.signUp?.password ?? ""}
-                onChange={event => Store.setSignUp({ password: event.target.value })}
+                onChange={event => Store.setUnloggedSignUp({ password: event.target.value })}
             />
 
             <Form.Button
@@ -104,8 +101,8 @@ export default class PageUser extends React.Component {
                 onClick={Store.onClick(
                     async () => {
                         await ControllerUser.signUp({
-                            email: Store.state.signUp?.email,
-                            password: Store.state.signUp?.password,
+                            email: Store.state.unlogged.signUp?.email,
+                            password: Store.state.unlogged.signUp?.password,
                         });
     
                         await Store.refresh();
@@ -120,10 +117,8 @@ export default class PageUser extends React.Component {
                 content="Sign In"
                 onClick={Store.onClick(
                     async () => {
-                        await Store.set({
-                            ...Store.init(),
-                            activeSign: "signIn",
-                        });
+                        await Store.set(Store.init());
+                        await Store.setUnlogged({ active: "signIn" });
                     }
                 )}
             />

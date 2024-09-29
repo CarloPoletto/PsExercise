@@ -12,6 +12,16 @@ public class TaskController : AController {
     }
 
     [AuthorizeUser]
+    public IActionResult Create([FromBody] TaskDto taskDto) {
+        var user = this.LoggedUser;
+        DatabaseTask.Insert(
+            userId: user.Id,
+            task: new Task(taskDto)
+        );
+        return Ok();
+    }
+
+    [AuthorizeUser]
     [Route("[controller]/[action]/{taskId}")]
     public IActionResult Delete(int taskId) {
         var user = this.LoggedUser;

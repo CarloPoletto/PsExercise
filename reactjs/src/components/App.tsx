@@ -1,7 +1,6 @@
 import React from "react";
 import { IStore, Store } from "classes/Store";
 import { Dimmer, Loader } from "semantic-ui-react";
-import { ControllerUser } from "controller/ControllerUser";
 import PageUser from "./PageUser";
 import PageTask from "./PageTask";
 

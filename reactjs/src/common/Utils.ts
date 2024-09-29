@@ -16,7 +16,9 @@ export function getGUID(): string {
 // Date
 //-----------------------------
 export const format0 = "DD/MM/YYYY";
-export const format1 = `YYYY-MM-DD`;
+export const format1 = "DD-MM-YYYY";
+export const format2 = `YYYY-MM-DD`;
+export const format3 = `YYYY/MM/DD`;
 
 export function checkDateString(input: Types.DateValue): boolean {
     return getMoment(input).isValid();
@@ -44,6 +46,8 @@ export function getMoment(input: Types.DateValue): moment.Moment {
     let formats = [
         format0,
         format1,
+        format2,
+        format3,
     ];
 
     for(let format of formats) {
