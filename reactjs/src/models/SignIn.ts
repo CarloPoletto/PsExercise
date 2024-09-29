@@ -1,4 +1,4 @@
-export class LoginNto {
+export class SignInDto {
 	public readonly email: string;
 	public readonly password: string;
 }

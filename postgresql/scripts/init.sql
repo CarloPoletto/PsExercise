@@ -39,6 +39,9 @@ GRANT INSERT ON TABLE public.tasks TO psuser;
 GRANT UPDATE ON TABLE public.tasks TO psuser;
 GRANT DELETE ON TABLE public.tasks TO psuser;
 
+GRANT USAGE ON SEQUENCE users_id_seq TO psuser;
+GRANT USAGE ON SEQUENCE tasks_id_seq TO psuser;
+
 ----------------------------------------------------
 -- DEFAULT DATA
 ----------------------------------------------------
