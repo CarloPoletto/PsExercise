@@ -1,7 +1,8 @@
 import React from "react";
-import { Store, IStore } from "classes/Store";
+import { Store, IStore } from "common/Store";
 import { Form, Header, List, Segment } from "semantic-ui-react";
 import { ControllerUser } from "controller/ControllerUser";
+import { ToastError } from "common/Errors";
 
 export default class PageUser extends React.Component {
     
@@ -46,9 +47,18 @@ export default class PageUser extends React.Component {
                 content="Confirm"
                 onClick={Store.onClick(
                     async () => {
+                        const email = Store.state.signIn?.email;
+                        const password = Store.state.signIn?.password;
+
+                        if(email == null || email == "" || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+                            throw new ToastError("Invalid email");
+
+                        if(password == null || password == "")
+                            throw new ToastError("Invalid password");
+
                         await ControllerUser.signIn({
-                            email: Store.state.signIn.email,
-                            password: Store.state.signIn.password,
+                            email: email,
+                            password: password,
                         });
     
                         await Store.refresh();
@@ -100,9 +110,18 @@ export default class PageUser extends React.Component {
                 content="Confirm"
                 onClick={Store.onClick(
                     async () => {
+                        const email = Store.state.signUp?.email;
+                        const password = Store.state.signUp?.password;
+
+                        if(email == null || email == "" || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+                            throw new ToastError("Invalid email");
+
+                        if(password == null || password == "")
+                            throw new ToastError("Invalid password");
+
                         await ControllerUser.signUp({
-                            email: Store.state.unlogged.signUp?.email,
-                            password: Store.state.unlogged.signUp?.password,
+                            email: email,
+                            password: password,
                         });
     
                         await Store.refresh();

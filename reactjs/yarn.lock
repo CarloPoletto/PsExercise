@@ -4379,6 +4379,11 @@ react-popper@^2.3.0:
     react-fast-compare "^3.0.1"
     warning "^4.0.2"
 
+react-semantic-toasts@^0.6.6:
+  version "0.6.6"
+  resolved "https://registry.yarnpkg.com/react-semantic-toasts/-/react-semantic-toasts-0.6.6.tgz#57f103903b2b4edb8303a82c4f0220128f89272f"
+  integrity sha512-sRSL3aikNSVxxhLai785UtSEaSZw3/pxQrPJVmLs83VpAkJyfBhy8RKxxBej0FGr+ah8qCRGHDJUPccNoraHKA==
+
 react@^17.0.2:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react/-/react-17.0.2.tgz#d0b5cc516d29eb3eee383f75b62864cfb6800037"

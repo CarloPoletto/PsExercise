@@ -12,3 +12,4 @@ export type Mutable<T> = {
 };
 
 export type DateValue = string | moment.Moment | Date;
+export type ToastType = "error" | "warning" | "success";

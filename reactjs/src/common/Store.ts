@@ -1,7 +1,7 @@
 import App from "components/App";
 import merge from "deepmerge";
-import * as Types from "../common/Types";
-import * as Utils from "../common/Utils";
+import * as Types from "./Types";
+import * as Utils from "./Utils";
 import { isPlainObject } from "is-plain-object";
 import { SignUpDto } from "models/SignUp";
 import { SignInDto } from "models/SignIn";
@@ -9,6 +9,8 @@ import { User } from "models/User";
 import { Task, TaskDto } from "models/Task";
 import { ControllerUser } from "controller/ControllerUser";
 import { ControllerTask } from "controller/ControllerTask";
+import { toast } from "react-semantic-toasts";
+import { NotImplementedError, ToastError } from "./Errors";
 
 export interface IStore {
     readonly loader: boolean;
@@ -18,6 +20,10 @@ export interface IStore {
         readonly user: User;
         readonly tasks: Task[];
         readonly taskNew: TaskDto;
+        readonly sorting: {
+            readonly column;
+            readonly direction;
+        };
     };
 
     readonly unlogged: {
@@ -54,6 +60,7 @@ export class Store implements IStore {
                 user: null,
                 tasks: null,
                 taskNew: null,
+                sorting: null,
             },
 
             unlogged: {
@@ -74,6 +81,32 @@ export class Store implements IStore {
         return Store.singleton;
     }
 
+    /* Toast
+    -----------------------------------*/
+    public static showToast(type: Types.ToastType, content: string): void {
+        let title: { [tooltype in Types.ToastType]: string } = {
+            error: "Error",
+            warning: "Warning",
+            success: "Success",
+        };
+
+        toast({
+            time: 10000,
+            size: "small",
+            type: type,
+            title: title[type],
+            description: content,
+        });
+    }
+
+    public static showToastError(content: string = null): void {
+        Store.showToast("error", content ?? "There was an unexpected error.");
+    }
+
+    public static showToastSuccess(content: string = null): void {
+        Store.showToast("success", content ?? "The operation was successful.");
+    }
+
     /* Loader
     -----------------------------------*/
     public static async onLoadindig(doAction: () => Promise<void>): Promise<void> {
@@ -81,6 +114,18 @@ export class Store implements IStore {
             await Store.set({ loader: true });
             await Utils.sleep(500);
             await doAction();
+        }
+
+        catch (err) {
+            console.error(err);
+
+            if (err instanceof ToastError)
+                return Store.showToastError(err.message);
+
+            if (err instanceof NotImplementedError)
+                return Store.showToastError(err.message);
+
+            return Store.showToastError();
         }
 
         finally {
@@ -93,11 +138,13 @@ export class Store implements IStore {
     }
 
     public static async refresh(): Promise<void> {
+        let user = await ControllerUser.getLoggedUser();
+        let tasks = user == null ? null : await ControllerTask.getAll();
         await Store.set({
             logged: {
                 active: "list",
-                user: await ControllerUser.getLoggedUser(),
-                tasks: await ControllerTask.getAll(),
+                user: user,
+                tasks: tasks,
                 taskNew: null,
             },
 

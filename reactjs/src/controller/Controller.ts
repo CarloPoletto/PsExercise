@@ -11,7 +11,7 @@ export abstract class AController {
     
         catch(err) {
             console.error(err);
-            return err;
+            throw err;
         }
     }
     
