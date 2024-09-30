@@ -1,17 +1,17 @@
 services:
-    aspnetapp:
-        container_name: aspnetapp
+    backend:
+        container_name: backend
         build:
-            context: ./aspnetapp
+            context: ./backend
         ports:
             - 5121:8080
         depends_on:
-            - "postgresql"
+            - "database"
         networks:
             - network
 
-    postgresql:
-        container_name: postgresql
+    database:
+        container_name: database
         image: postgres:13-alpine
         environment:
             POSTGRES_USER: admin
@@ -20,8 +20,8 @@ services:
         ports:
             - 5432:5432
         volumes:
-            - ./postgresql/data:/var/lib/postgresql/data
-            - ./postgresql/scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+            - ./database/data:/var/lib/postgresql/data
+            - ./database/scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
         networks:
             - network
 
