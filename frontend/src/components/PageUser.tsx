@@ -1,8 +1,8 @@
 import React from "react";
-import { Store, IStore } from "common/Store";
+import { Store, IStore } from "misc/Store";
 import { Form, Header, List, Segment } from "semantic-ui-react";
 import { ControllerUser } from "controller/ControllerUser";
-import { ToastError } from "common/Errors";
+import { ToastError } from "misc/Errors";
 
 export default class PageUser extends React.Component {
     

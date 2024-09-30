@@ -22,14 +22,15 @@ The technology stack used includes:
 The project is organized into the following folders:
 
 - **backend**: contains the Dockerfile and the source code for the backend of the application. The initial setup is based on the [official documentation](https://learn.microsoft.com/it-it/aspnet/core/host-and-deploy/docker/building-net-docker-images?view=aspnetcore-8.0)
-    - **aspnetapp.sln**: ASP.NET Core solution.
-    - **Dockerfile**: Docker image for the backend.
-    - **aspnetapp**: folder with the backend source code.
+    - **Source**: folder with the backend source code.
         - **Controller**: folder containing the definition of all exposed services.
         - **Database**: folder with classes responsible for executing database queries.
+        - **Misc**: folder containing various utility classes.
         - **Models**: folder with model and DTO classes.
-        - **wwwroot**: folder containing the compiled frontend files.
-        - **appsettings.json**: configuration file.
+    - **wwwroot**: folder containing the compiled frontend files.
+    - **appsettings.json**: configuration file.
+    - **aspnetapp.sln**: ASP.NET Core solution.
+    - **Dockerfile**: Docker image for the backend.
 - **database**: folder containing the PostgreSQL database volume and the database initialization file.
     - **data**: folder with the PostgreSQL volume.
     - **scripts**: folder with SQL scripts necessary to initialize the database, creating all the necessary tables and users for the correct functioning of the project. This script runs automatically on the first database launch (or whenever no data is present).

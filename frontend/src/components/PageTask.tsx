@@ -1,11 +1,11 @@
 import React from "react";
-import * as Utils from "common/Utils";
-import { Store } from "common/Store";
+import * as Utils from "misc/Utils";
+import { Store } from "misc/Store";
 import { ControllerUser } from "controller/ControllerUser";
 import { Button, Form, Grid, GridColumn, GridRow, Header, Icon, Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow } from "semantic-ui-react";
 import { ControllerTask } from "controller/ControllerTask";
 import { Task } from "models/Task";
-import { NotImplementedError, ToastError } from "common/Errors";
+import { NotImplementedError, ToastError } from "misc/Errors";
 
 const PRIORITY = [
     { value: 0, text: "Low",  },

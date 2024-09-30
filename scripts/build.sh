@@ -4,14 +4,14 @@ DIR_REACT=$DIR_ROOT/frontend
 
 cd $DIR_ROOT
 rm -rf $DIR_REACT/build
-rm -rf $DIR_ROOT/backend/aspnetapp/wwwroot/*.*
+rm -rf $DIR_ROOT/backend/wwwroot/*.*
 
 cd $DIR_REACT
 yarn
 yarn development
 
 cd $DIR_ROOT
-mv $DIR_REACT/build/* $DIR_ROOT/backend/aspnetapp/wwwroot
+mv $DIR_REACT/build/* $DIR_ROOT/backend/wwwroot
 
 cd $DIR_ROOT
 docker-compose down -v
