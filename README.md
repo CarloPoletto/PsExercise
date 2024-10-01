@@ -46,20 +46,27 @@ The project is organized into the following folders:
     - **test.sh**: script to test the backend's exposed services.
 - **docker-compose.yml**: Docker Compose configuration file.
 
-## Backend Exposed Services
+PS: The database initialization script also takes care of inserting the following 3 application users into the database:
 
-Inside the `backend/aspnet/Controller` folder, 3 different classes are defined that are useful for exposing the following endpoints:
+| Email             | Password  |
+| ---               | ---       |
+| user1@email.com   | pass      |
+| user2@email.com   | pass      |
+| user3@email.com   | pass      |
 
-- **SiteController**: class to retrieve the site's HTML.
-- **TaskController**: class to manage tasks.
-    - `/Task/GetAll`: service to retrieve all tasks related to the logged-in user.
-    - `/Task/Create`: service to create a new task.
-    - `/Task/Delete/{taskId}`: service to delete a task.
-- **UserController**: class to manage users.
-    - `/User/SignUp`: service to allow the creation of a new user.
-    - `/User/SignIn`: service to allow user login.
-    - `/User/SignOut`: service to log out.
-    - `/User/GetLoggedUser`: service to retrieve information about the logged-in user.
+## Backend Services
+
+The backend exposes REST services useful for managing users and tasks. These services are configured through classes inside the `backend/aspnet/Controller` folder. The following table describes their expected behavior:
+
+| Class Name        | Path                  | Method    | Auth JWT Required | Input     | Output            | Description |
+| ---               | ---                   | ---       | ---               | ---       | ---               | ---           |
+| UserController    | /User/SignUp          | POST      | No                | SignUpDto | -                 | service to create a new user |
+| UserController    | /User/SignIn          | POST      | No                | SignInDto | -                 | service to log-in |
+| UserController    | /User/SignOut         | POST      | Yes               | -         | -                 | service to log-out |
+| UserController    | /User/GetLoggedUser   | GET       | No                | -         | -                 | service to get logged in user data |
+| TaskController    | /Task/GetAll          | GET       | Yes               | -         | List of TaskDTO   | service to get logged in user's Tasks |
+| TaskController    | /Task/Create          | POST      | Yes               | TaskDto   | -                 | service to create a new task |
+| TaskController    | /Task/Delete/{taskId} | DELETE    | Yes               | Task ID   | -                 | service to delete a task |
 
 ## Running Locally
 

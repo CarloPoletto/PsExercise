@@ -15,6 +15,14 @@ public static class DatabaseUser {
         return Database.ExecuteRead<User>(command, npgsqlDataReader => new User(npgsqlDataReader)).SingleOrDefault();
     }
 
+    public static User Select(string email) {
+        NpgsqlCommand command = new NpgsqlCommand(
+            $"SELECT * FROM \"users\" WHERE email = @email "
+        );
+        command.Parameters.AddWithValue("email", NpgsqlDbType.Varchar, email.Trim().ToLower());
+        return Database.ExecuteRead<User>(command, npgsqlDataReader => new User(npgsqlDataReader)).SingleOrDefault();
+    }
+
     public static User Select(string email, string password) {
         NpgsqlCommand command = new NpgsqlCommand(
             $"SELECT * FROM \"users\" " +

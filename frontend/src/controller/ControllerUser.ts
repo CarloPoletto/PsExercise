@@ -14,7 +14,7 @@ export class ControllerUser extends AController {
     }
 
     public static async signOut(): Promise<void> {
-        await ControllerUser.apiGet(`User/SignOut`);
+        await ControllerUser.apiPost(`User/SignOut`);
     }
 
     public static async getLoggedUser(): Promise<User> {
