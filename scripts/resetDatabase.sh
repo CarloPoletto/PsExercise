@@ -2,6 +2,6 @@ cd ..
 
 docker-compose down -v
 
-rm -rf ./postgresql/data/*
+rm -rf ./database/data/*
 
 docker-compose up -d --build

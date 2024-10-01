@@ -1,4 +1,4 @@
-postgresql/data/**
+database/data/**
 **/build/**
 **/wwwroot/**
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { IStore, Store } from "common/Store";
+import { IStore, Store } from "misc/Store";
 import { Dimmer, Loader } from "semantic-ui-react";
 import PageUser from "./PageUser";
 import PageTask from "./PageTask";

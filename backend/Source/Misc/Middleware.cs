@@ -14,8 +14,8 @@ public class Middleware {
             Log(context);
         }
 
-        catch (UnauthorizedAccessException ex) {
-            await HandleExceptionAsync(context, StatusCodes.Status401Unauthorized, ex);
+        catch (HttpError ex) {
+            await HandleExceptionAsync(context, ex.StatusCode, ex);
             Log(context, ex);
         }
 
@@ -33,7 +33,7 @@ public class Middleware {
     }
 
     private static void Log(HttpContext context, Exception? exception = null) {
-        Console.WriteLine($"[PsExcercise] [{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}] [{context.Request.Method}] [Status {context.Response.StatusCode}] {context.Request.Path}");
+        Console.WriteLine($"[PsExcercise] [{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}] [Status {context.Response.StatusCode}] [{context.Request.Method}] {context.Request.Path}");
         
         if(exception != null) {
             Console.WriteLine();

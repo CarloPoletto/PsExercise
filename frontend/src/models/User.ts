@@ -1,4 +1,4 @@
-import * as Utils from "common/Utils";
+import * as Utils from "misc/Utils";
 
 export class UserDto {
 	public readonly id: number;

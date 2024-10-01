@@ -27,7 +27,7 @@ export abstract class AController {
         return await AController.getResponse(url, (url) => request.put(url).send(data));
     }
     
-    protected static async apiPost(url: string, data: object): Promise<request.Response> {
+    protected static async apiPost(url: string, data: object = null): Promise<request.Response> {
         return await AController.getResponse(url, (url) => request.post(url).send(data));
     }
 }

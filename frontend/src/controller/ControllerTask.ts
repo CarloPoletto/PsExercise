@@ -9,11 +9,11 @@ export class ControllerTask extends AController {
         return res == null ? null : res.map(el => new Task(el));
     }
 
-    public static async delete(task: Task): Promise<void> {
-        await ControllerTask.apiDel(`Task/Delete`, task.id);
-    }
-
     public static async create(taskDto: TaskDto): Promise<void> {
         await ControllerTask.apiPost(`Task/Create`, taskDto);
+    }
+
+    public static async delete(task: Task): Promise<void> {
+        await ControllerTask.apiDel(`Task/Delete`, task.id);
     }
 }

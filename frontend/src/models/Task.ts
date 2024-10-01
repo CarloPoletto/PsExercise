@@ -1,4 +1,4 @@
-import * as Utils from "common/Utils";
+import * as Utils from "misc/Utils";
 
 export class TaskDto {
 	public readonly id: number;

@@ -1,5 +1,5 @@
 import moment from "moment";
-import * as Types from "../common/Types";
+import * as Types from "../misc/Types";
 
 /* Miscellaneous
 -----------------------------------*/

@@ -12,7 +12,7 @@ public abstract class AAuthorizeAttribute : Attribute, IAuthorizationFilter {
             CheckAuthorization(context, context.HttpContext.Request.GetLoggedUser());
         }
 
-        catch (UnauthorizedAccessException) {
+        catch (HttpError401Unauthorized) {
             context.Result = new UnauthorizedResult();
         }
     }
@@ -27,6 +27,6 @@ public class AuthorizeUserAttribute : AuthorizeAllAttribute {
         base.CheckAuthorization(context, user);
 
         if(user == null)
-            throw new UnauthorizedAccessException();
+            throw new HttpError401Unauthorized();
     }
 }
