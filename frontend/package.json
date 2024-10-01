@@ -1,0 +1,39 @@
+{
+    "name": "psexcercise",
+    "version": "1.0.0",
+    "main": "entry.js",
+    "scripts": {
+        "development": "webpack --env=development",
+        "production": "webpack --env=production"
+    },
+    "dependencies": {
+        "deepmerge": "^4.2.2",
+        "deepmerge-ts": "^4.0.1",
+        "is-plain-object": "^5.0.0",
+        "merge-deep": "^3.0.3",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
+        "semantic-ui-css": "^2.5.0",
+        "semantic-ui-react": "^2.1.5",
+        "moment": "2.30.1",
+        "superagent": "10.1.0",
+        "react-semantic-toasts": "^0.6.6"
+    },
+    "devDependencies": {
+        "@types/node": "^10.12.12",
+        "@types/react": "^16.7.13",
+        "css-loader": "^2.0.0",
+        "file-loader": "^2.0.0",
+        "html-webpack-plugin": "^3.2.0",
+        "mini-css-extract-plugin": "^0.5.0",
+        "optimize-css-assets-webpack-plugin": "^5.0.1",
+        "style-loader": "^0.23.1",
+        "terser-webpack-plugin": "^1.2.3",
+        "ts-loader": "^5.3.3",
+        "typescript": "^4.6.4",
+        "url-loader": "^0.5.9",
+        "webpack": "^4.46.0",
+        "webpack-cli": "^3.2.3",
+        "webpack-dev-server": "^3.2.1"
+    }
+}

@@ -1,0 +1,34 @@
+{
+    "compilerOptions": {
+        "baseUrl": "src",
+        "outDir": "build",
+        "allowJs": true,
+        "module": "es2015",
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "downlevelIteration": true,
+        "noImplicitAny": false,
+        "allowSyntheticDefaultImports": true,
+        "target": "es5",
+        "checkJs": false,
+        "jsx": "react",
+        "paths": {
+            "*": [
+                "*"
+            ]
+        },
+        "lib": [
+            "es2015",
+            "dom"
+        ]
+    },
+    "include": [
+        "src/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "css",
+        "img",
+        "config"
+    ]
+}
