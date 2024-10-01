@@ -56,7 +56,7 @@ PS: The database initialization script also takes care of inserting the followin
 
 ## Backend Services
 
-The backend exposes REST services useful for managing users and tasks. These services are configured through classes inside the `backend/aspnet/Controller` folder. The following table describes their expected behavior:
+The backend exposes REST services useful for managing users and tasks. These services are configured through classes inside the `backend/Source/Controller` folder. The following table describes their expected behavior:
 
 | Class Name        | Path                  | Method    | Auth JWT Required | Input     | Output            | Description |
 | ---               | ---                   | ---       | ---               | ---       | ---               | ---           |
@@ -85,11 +85,13 @@ Note: The application was compiled, run, and tested on Windows 11 64-bit with th
 To compile and run the application, simply navigate to the `scripts` folder and execute `build.sh`, which will:
 
 - Compile the frontend.
-- Copy the produced files (.js, .css, etc.) to `backend/aspnetapp/wwwroot`.
+- Copy the produced files (.js, .css, etc.) to `backend/wwwroot`.
 - Start the backend and database Docker containers.
 - Display the backend logs.
 
 Once the script finishes execution, PsExercise will be accessible at http://localhost:5121/.
+
+**NB**: keep in mind that the database initialization may take 1 or 2 minutes. For this reason, after the first launch it is recommended to wait a bit before entering the application via browser.
 
 ## Future Improvements
 

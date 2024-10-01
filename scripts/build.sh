@@ -3,6 +3,8 @@ DIR_ROOT=$DIR_INIT/..
 DIR_REACT=$DIR_ROOT/frontend
 
 cd $DIR_ROOT
+mkdir -p $DIR_ROOT/backend/wwwroot
+
 rm -rf $DIR_REACT/build
 rm -rf $DIR_ROOT/backend/wwwroot/*.*
 
